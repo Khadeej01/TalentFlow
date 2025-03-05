@@ -3,10 +3,10 @@ package Offre_Emploi.Models;
 import java.time.LocalDate;
 
 public class OffreEmploi {
-    private int id; // L'ID sera auto-généré par la base de données
+    private int id;
     private String titre;
     private String description;
-    private LocalDate datePublication; // Utilisation de LocalDate
+    private LocalDate datePublication;
     private String recruteurEmail;
 
     public OffreEmploi() {}
@@ -21,7 +21,7 @@ public class OffreEmploi {
     public OffreEmploi(int id, String titre, String description, LocalDate datePublication, String recruteurEmail) {
     }
 
-    // Getters et Setters
+
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
