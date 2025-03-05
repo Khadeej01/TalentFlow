@@ -11,7 +11,7 @@ public class DBConnection {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             try {
-                conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/TalentFlowDB", "root", "lahcen123");
+                conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/TalentFlowDB", "root", "Root@123");
                 System.out.println("connection suuccess");
 
             } catch (Exception e){
