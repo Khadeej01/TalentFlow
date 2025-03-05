@@ -28,7 +28,19 @@ public class CandidatServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+
+        String name = req.getParameter("name");
+        String email = req.getParameter("email");
+        String telephone = req.getParameter("telephone");
+        String cv = req.getParameter("cv");
+        String password = req.getParameter("password");
+
+        Candidat candidat = new Candidat(name, email, telephone, cv, password);
+        CandidatDAO candidatDAO = new CandidatDAO();
+
+
+
+
     }
 
 
