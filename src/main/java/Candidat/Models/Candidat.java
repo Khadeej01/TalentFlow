@@ -12,6 +12,10 @@ public class Candidat extends User {
         this.cv = cv;
     }
 
+    public Candidat() {
+
+    }
+
     public String getTelephone() { return telephone; }
     public String getCv() { return cv; }
 }
