@@ -30,7 +30,7 @@ public class RecruteurDAO {
             statement.setString(5, recruteur.getEntreprise());
             statement.setString(6, recruteur.getSecteur());
 
-            int rowsAffected = statement.executeUpdate();
+            int rowsAffected =  ²² statement.executeUpdate();
 
 
             if (rowsAffected > 0) {
