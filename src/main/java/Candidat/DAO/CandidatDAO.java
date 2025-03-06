@@ -4,23 +4,24 @@ import java.sql.*;
 import Candidat.Models.Candidat;
 import utils.DBConnection;
 
+
 public class CandidatDAO {
 
-    public static boolean AddCandidat(Candidat candidat) {
+    public void registerCandidat(Candidat candidat) {
 
         try (Connection con = DBConnection.getConnection()) {
-            String query = "INSERT INTO Users (nom, email, password, role, telephone, cv) VALUES (?, ?, ?, ?, ?, ?)";
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.setString(1, candidat.getNom());
-            ps.setString(2, candidat.getEmail());
-            ps.setString(3, candidat.getPassword());
-            ps.setString(4, "Candidat");
-            ps.setString(5, candidat.getTelephone());
-            ps.setString(6, candidat.getCv());
-            return ps.executeUpdate() > 0;
+            String query = "INSERT INTO Candidats (nom, email, password,  telephone, cv) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement stmnt = con.prepareStatement(query);
+            stmnt.setString(1, candidat.getNom());
+            stmnt.setString(2, candidat.getEmail());
+            stmnt.setString(3, candidat.getPassword());
+            stmnt.setString(4, candidat.getTelephone());
+            stmnt.setString(5, candidat.getCv());
+             stmnt.executeUpdate() ;
+
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+
         }
     }
 }

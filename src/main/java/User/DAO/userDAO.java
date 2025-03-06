@@ -9,7 +9,7 @@ import java.util.List;
 public class userDAO {
 
     private Connection con;
-    private static final String SelectAllUsers ="select * from user";
+    private static final String SelectAllUsers ="select * from Users";
     public userDAO() {
         con = DBConnection.getConnection();
     }
@@ -20,10 +20,8 @@ public class userDAO {
         stmnt.setString(1, user.getNom());
         stmnt.setString(2, user.getEmail());
         stmnt.setString(3, user.getPassword());
-        stmnt.setString(4, user.getRole());
         stmnt.executeUpdate();
 
-            System.out.println("Role being inserted: " + user.getRole());
 
 
         } catch(SQLException e){
@@ -42,7 +40,7 @@ public class userDAO {
                 user.setNom(rs.getString("nom"));
                 user.setEmail(rs.getString("email"));
                 user.setPassword(rs.getString("password"));
-                user.setRole(rs.getString("role"));
+
                 users.add(user);
 
             }
