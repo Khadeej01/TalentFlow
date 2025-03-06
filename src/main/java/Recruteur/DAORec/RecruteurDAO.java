@@ -19,7 +19,7 @@ public class RecruteurDAO {
 
 
     public void addRecruteur(Recruteur recruteur) throws SQLException {
-        // Insérer dans la table Users (car Recruteur est un sous-ensemble d'un User)
+
         String query = "INSERT INTO Users (nom, email, password, role) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
@@ -30,7 +30,7 @@ public class RecruteurDAO {
             statement.setString(5, recruteur.getEntreprise());
             statement.setString(6, recruteur.getSecteur());
 
-            int rowsAffected = statement.executeUpdate();
+            int rowsAffected =  ²² statement.executeUpdate();
 
 
             if (rowsAffected > 0) {
@@ -43,7 +43,7 @@ public class RecruteurDAO {
         }
     }
 
-    // Récupérer un recruteur par son ID
+
     public Recruteur getRecruteurById(int id) throws SQLException {
         String query = "SELECT * FROM Users WHERE id = ? AND role = 'recruteur'";
 
