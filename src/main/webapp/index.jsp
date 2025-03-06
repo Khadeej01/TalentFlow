@@ -26,7 +26,7 @@
             <label for="role">Role</label>
             <select class="form-control" id="role" name="role">
                 <option value="candidat">Candidat</option>
-                <option value="recruiter">Recruiter</option>
+                <option value="recruteur">Recruteur</option>
             </select>
         </div>
         <button type="submit" class="btn btn-primary btn-block">Register</button>

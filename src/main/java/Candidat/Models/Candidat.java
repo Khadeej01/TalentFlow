@@ -7,7 +7,7 @@ public class Candidat extends User {
     private String cv;
 
     public Candidat(String nom, String email, String password, String telephone, String cv) {
-        super(nom, email, password, "Candidat");
+        super(nom, email, password);
         this.telephone = telephone;
         this.cv = cv;
     }
