@@ -1,10 +1,13 @@
 package User.Servlets;
 
+import Candidat.Models.Candidat;
+import Candidat.DAO.CandidatDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
@@ -20,11 +23,21 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doGet(req, resp);
     }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
-    }
+        String email = req.getParameter("email");
+        String password = req.getParameter("password");
 
+        CandidatDAO candidatDAO = new CandidatDAO();
+        HttpSession session = req.getSession();
 
-}
+        Candidat candidat = candidatDAO.loginCandidat(email, password);
+        if (candidat != null) {
+            session.setAttribute("candidate", candidat);
+            resp.sendRedirect("Candidat.jsp");
+            return; // Exit the method to prevent further execution
+        } else {
+            req.setAttribute("errorMessage", "Invalid email or password!");
+            req.getRequestDispatcher("Login.jsp").forward(req, resp);
+        }
+    }}

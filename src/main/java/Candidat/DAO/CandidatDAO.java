@@ -24,4 +24,26 @@ public class CandidatDAO {
 
         }
     }
+    public Candidat loginCandidat(String email, String password) {
+
+        Candidat candidat = null;
+try(Connection conn = DBConnection.getConnection()) {
+    String query = "SELECT * FROM Candidats WHERE email = ? AND password = ?";
+    PreparedStatement stmnt = conn.prepareStatement(query);
+    stmnt.setString(1, email);
+    stmnt.setString(2, password);
+    ResultSet rs = stmnt.executeQuery();
+
+    if (rs.next()) {
+        candidat = new Candidat();
+        candidat.setId(rs.getInt("id"));
+        candidat.setNom(rs.getString("nom"));
+
+    }
+} catch (SQLException e) {
+    throw new RuntimeException(e);
+}
+
+        return candidat;
+    }
 }
