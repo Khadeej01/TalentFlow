@@ -6,15 +6,15 @@ public class Recruteur extends User {
     private String secteur;
 
 
-    public Recruteur(int id, String nom, String email, String password, String role, String entreprise, String secteur) {
-        super(id, nom, email, password, role);
+    public Recruteur(int id, String nom, String email, String password,  String entreprise, String secteur) {
+        super(id, nom, email, password);
         this.entreprise = entreprise;
         this.secteur = secteur;
     }
 
 
-    public Recruteur(String nom, String email, String password, String role, String entreprise, String secteur) {
-        super(nom, email, password, role);
+    public Recruteur(String nom, String email, String password,  String entreprise, String secteur) {
+        super(nom, email, password);
         this.entreprise = entreprise;
         this.secteur = secteur;
     }
@@ -44,7 +44,7 @@ public class Recruteur extends User {
                 ", nom='" + getNom() + '\'' +
                 ", email='" + getEmail() + '\'' +
                 ", password='" + getPassword() + '\'' +
-                ", role='" + getRole() + '\'' +
+
                 ", entreprise='" + entreprise + '\'' +
                 ", secteur='" + secteur + '\'' +
                 '}';

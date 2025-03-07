@@ -15,9 +15,10 @@ public class RecruteurDAO {
 
     public RecruteurDAO(Connection connection) {
         this.connection = connection;
-    }
+    }}
 
 
+<<<<<<< HEAD
     public void addRecruteur(Recruteur recruteur) throws SQLException {
 
         String query = "INSERT INTO Users (nom, email, password, role) VALUES (?, ?, ?, ?)";
@@ -31,86 +32,100 @@ public class RecruteurDAO {
             statement.setString(6, recruteur.getSecteur());
 
             int rowsAffected =   statement.executeUpdate();
+=======
+//    public void addRecruteur(Recruteur recruteur) throws SQLException {
+//
+//        String query = "INSERT INTO Users (nom, email, password, role) VALUES (?, ?, ?, ?)";
+//
+//        try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+//            statement.setString(1, recruteur.getNom());
+//            statement.setString(2, recruteur.getEmail());
+//            statement.setString(3, recruteur.getPassword());
+//            statement.setString(4, recruteur.getEntreprise());
+//            statement.setString(5, recruteur.getSecteur());
+//
+//            int rowsAffected =   statement.executeUpdate();
+//
+//
+//            if (rowsAffected > 0) {
+//                try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+//                    if (generatedKeys.next()) {
+//                        recruteur.setId(generatedKeys.getInt(1));
+//                    }
+//                }
+//            }
+//        }
+//    }
+>>>>>>> f64b9f10e9ed22d00d6bd19527056dbdc2f0b2f5
 
 
-            if (rowsAffected > 0) {
-                try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-                    if (generatedKeys.next()) {
-                        recruteur.setId(generatedKeys.getInt(1));
-                    }
-                }
-            }
-        }
-    }
+//    public Recruteur getRecruteurById(int id) throws SQLException {
+//        String query = "SELECT * FROM Users WHERE id = ? AND role = 'recruteur'";
+//
+//        try (PreparedStatement statement = connection.prepareStatement(query)) {
+//            statement.setInt(1, id);
+//            ResultSet resultSet = statement.executeQuery();
+//
+//            if (resultSet.next()) {
+//                return mapResultSetToRecruteur(resultSet);
+//            }
+//        }
+//        return null;
+//    }
 
 
-    public Recruteur getRecruteurById(int id) throws SQLException {
-        String query = "SELECT * FROM Users WHERE id = ? AND role = 'recruteur'";
-
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                return mapResultSetToRecruteur(resultSet);
-            }
-        }
-        return null;
-    }
-
-
-    public Recruteur getRecruteurByEmail(String email) throws SQLException {
-        String query = "SELECT * FROM Users WHERE email = ? AND role = 'recruteur'";
-
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, email);
-            ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                return mapResultSetToRecruteur(resultSet);
-            }
-        }
-        return null;
-    }
+//    public Recruteur getRecruteurByEmail(String email) throws SQLException {
+//        String query = "SELECT * FROM Users WHERE email = ? AND role = 'recruteur'";
+//
+//        try (PreparedStatement statement = connection.prepareStatement(query)) {
+//            statement.setString(1, email);
+//            ResultSet resultSet = statement.executeQuery();
+//
+//            if (resultSet.next()) {
+//                return mapResultSetToRecruteur(resultSet);
+//            }
+//        }
+//        return null;
+//    }
 
 
-    public void updateRecruteur(Recruteur recruteur) throws SQLException {
-        String query = "UPDATE Users SET nom = ?, email = ?, password = ?, role = ?, entreprise = ?, secteur = ? WHERE id = ?";
-
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, recruteur.getNom());
-            statement.setString(2, recruteur.getEmail());
-            statement.setString(3, recruteur.getPassword());
-            statement.setString(4, recruteur.getRole());
-            statement.setString(5, recruteur.getEntreprise());
-            statement.setString(6, recruteur.getSecteur());
-            statement.setInt(7, recruteur.getId());
-
-            statement.executeUpdate();
-        }
-    }
-
-
-    public void deleteRecruteur(int id) throws SQLException {
-        String query = "DELETE FROM Users WHERE id = ? AND role = 'recruteur'";
-
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, id);
-            statement.executeUpdate();
-        }
-    }
+//    public void updateRecruteur(Recruteur recruteur) throws SQLException {
+//        String query = "UPDATE Users SET nom = ?, email = ?, password = ?, role = ?, entreprise = ?, secteur = ? WHERE id = ?";
+//
+//        try (PreparedStatement statement = connection.prepareStatement(query)) {
+//            statement.setString(1, recruteur.getNom());
+//            statement.setString(2, recruteur.getEmail());
+//            statement.setString(3, recruteur.getPassword());
+//            statement.setString(4, recruteur.getRole());
+//            statement.setString(5, recruteur.getEntreprise());
+//            statement.setString(6, recruteur.getSecteur());
+//            statement.setInt(7, recruteur.getId());
+//
+//            statement.executeUpdate();
+//        }
+//    }
 
 
-    private Recruteur mapResultSetToRecruteur(ResultSet resultSet) throws SQLException {
-        int id = resultSet.getInt("id");
-        String nom = resultSet.getString("nom");
-        String email = resultSet.getString("email");
-        String password = resultSet.getString("password");
-        String role = resultSet.getString("role");
-        String entreprise = resultSet.getString("entreprise");
-        String secteur = resultSet.getString("secteur");
+//    public void deleteRecruteur(int id) throws SQLException {
+//        String query = "DELETE FROM Users WHERE id = ? AND role = 'recruteur'";
+//
+//        try (PreparedStatement statement = connection.prepareStatement(query)) {
+//            statement.setInt(1, id);
+//            statement.executeUpdate();
+//        }
+//    }
 
-        return new Recruteur(id, nom, email, password, role, entreprise, secteur);
-    }
-}
+
+//    private Recruteur mapResultSetToRecruteur(ResultSet resultSet) throws SQLException {
+//        int id = resultSet.getInt("id");
+//        String nom = resultSet.getString("nom");
+//        String email = resultSet.getString("email");
+//        String password = resultSet.getString("password");
+//        String role = resultSet.getString("role");
+//        String entreprise = resultSet.getString("entreprise");
+//        String secteur = resultSet.getString("secteur");
+//
+//        return new Recruteur(id, nom, email, password, role, entreprise, secteur);
+//    }
+//}
 

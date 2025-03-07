@@ -1,37 +1,40 @@
-//package Candidature.DAO;
-//
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//public class CandidatureDAO {
-//    private List<Candidature> candidatures = new ArrayList<>();
-//    private int nextId = 1;
-//
-//    // ✅ Postuler (Apply for a job)
-//    public Candidature postuler(int candidatId, int offreId) {
-//        Candidature newCandidature = new Candidature(nextId++, candidatId, offreId, "En attente");
-//        candidatures.add(newCandidature);
-//        return newCandidature;
-//    }
-//
-//    // ✅ Modifier une candidature
-//    public boolean modifierCandidature(int candidatureId, int newOffreId) {
-//        for (Candidature c : candidatures) {
-//            if (c.getId() == candidatureId) {
-//                c.setOffreId(newOffreId);
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-//
-//    // ✅ Retirer une candidature
-//    public boolean retirerCandidature(int candidatureId) {
-//        return candidatures.removeIf(c -> c.getId() == candidatureId);
-//    }
-//
-//    // ✅ Get all candidatures
-//    public List<Candidature> getAllCandidatures() {
-//        return candidatures;
-//    }
-//}
+package Candidature.DAO;
+
+import java.util.ArrayList;
+import java.util.List;
+import Candidature.Models.Candidature;
+import java.sql.*;
+
+import static utils.DBConnection.getConnection;
+
+public class CandidatureDAO {
+
+
+    public List<Candidature> getAllCandidates() {
+        List<Candidature> candidates = new ArrayList<>();
+        String sql = "SELECT * FROM candidats ";
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                int candidatId = rs.getInt("id");
+                String nom = rs.getString("nom");
+                String email = rs.getString("email");
+                String telephone = rs.getString("telephone");
+                String cv = rs.getString("cv");
+
+
+                candidates.add(new Candidature(candidatId, nom, email, telephone,cv));
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la récupération des candidats : " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return candidates;
+    }
+
+}

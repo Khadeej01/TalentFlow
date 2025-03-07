@@ -1,5 +1,7 @@
-package User.Servlets;
+package Candidat.Servlets;
 
+import Candidat.DAO.CandidatDAO;
+import Candidat.Models.Candidat;
 import User.DAO.userDAO;
 import User.Models.User;
 import jakarta.servlet.ServletException;
@@ -9,16 +11,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.List;
 
-@WebServlet("/Register")
-public class RegisterServlet extends HttpServlet {
+@WebServlet("/RegisterCandidat")
+public class RegisterCandidatServlet extends HttpServlet {
 
-private userDAO userdao = new userDAO();
+private CandidatDAO candidatDAO = new CandidatDAO();
     @Override
     public void init() throws ServletException {
         super.init();
-        userdao = new userDAO();
+        candidatDAO = new CandidatDAO();
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -32,12 +33,13 @@ private userDAO userdao = new userDAO();
     String nom = req.getParameter("nom");
     String email = req.getParameter("email");
     String password = req.getParameter("password");
-    String role = req.getParameter("role");
+    String telephone = req.getParameter("telephone");
+    String cv = req.getParameter("cv");
 
-        User user = new User(nom,email,password,role);
-        userDAO userdao = new userDAO();
+        Candidat candidat = new Candidat(nom,email,password,telephone,cv);
+        CandidatDAO candidatdao = new CandidatDAO();
 
-        userdao.registerUser(user);
+        candidatDAO.registerCandidat(candidat);
     }
 
 
