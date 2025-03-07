@@ -1,3 +1,8 @@
+<%@ page import="java.util.*" %>
+<%@ page import="Candidature.DAO.CandidatureDAO" %>
+
+<%@ page import="Candidat.Models.Candidat" %>
+<%@ page import="Candidature.Models.Candidature" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -145,25 +150,50 @@
     <div class="container mt-4">
         <h2 class="fw-bold text-primary mb-4">Candidates</h2>
         <div class="table-responsive">
-            <c:choose>
-                <c:when test="${not empty candidates}">
-                    <table class="table table-striped table-hover">
-                        <thead class="table-dark">
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Phone</th>
-                            <th scope="col">CV</th>
-                        </tr>
-                        </thead>
 
-                    </table>
-                </c:when>
-                <c:otherwise>
-                    <p class="text-muted">No candidates found.</p>
-                </c:otherwise>
-            </c:choose>
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">CV</th>
+                </tr>
+                </thead>
+                <tbody>
+                <%
+                    CandidatureDAO candidatureDAO=new CandidatureDAO();
+                    List<Candidature> candidatList =  candidatureDAO.getAllCandidates();;
+                    for(Candidature candidat : candidatList){
+
+
+                %>
+                <tr>
+                    <td>
+                        <%=candidat.getCandidatId()%>
+                    </td>
+                    <td>
+                        <%=candidat.getNom()%>
+                    </td>
+                    <td>
+                        <%=candidat.getTelephone()%>
+                    </td>
+                    <td>
+                        <%=candidat.getEmail()%>
+                    </td>
+
+
+                    <td>
+                        <%=candidat.getCv()%>
+                    </td>
+                </tr>
+                <%   }
+                %>
+                </tbody>
+
+            </table>
+
         </div>
     </div>
 </div>
