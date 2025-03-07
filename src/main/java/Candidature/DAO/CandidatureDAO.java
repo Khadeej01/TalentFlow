@@ -9,24 +9,24 @@ import static utils.DBConnection.getConnection;
 
 public class CandidatureDAO {
 
-    // Récupérer tous les candidats depuis la base de données
+
     public List<Candidature> getAllCandidates() {
         List<Candidature> candidates = new ArrayList<>();
-        String sql = "SELECT candidatId, nom, email, telephone, offreId, status FROM Users WHERE role = 'candidat'";
+        String sql = "SELECT * FROM candidats ";
 
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                int candidatId = rs.getInt("candidatId");
+                int candidatId = rs.getInt("id");
                 String nom = rs.getString("nom");
                 String email = rs.getString("email");
                 String telephone = rs.getString("telephone");
-                int offreId = rs.getInt("offreId");
-                String status = rs.getString("status");
+                String cv = rs.getString("cv");
 
-                candidates.add(new Candidature(candidatId, nom, email, telephone, offreId, status));
+
+                candidates.add(new Candidature(candidatId, nom, email, telephone,cv));
             }
 
         } catch (SQLException e) {

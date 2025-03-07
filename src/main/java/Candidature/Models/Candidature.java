@@ -6,31 +6,29 @@ public class Candidature {
     private String nom;
     private String telephone;
     private String email;
-    private int offreId;
-    private String statut;
+    private String cv;
 
-    public int getCandidatId() {
-        return candidatId;
-    }
-
-    public void setCandidatId(int candidatId) {
+    public Candidature(int candidatId, String nom, String telephone, String email, String cv) {
         this.candidatId = candidatId;
-    }
-
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
         this.nom = nom;
-    }
-
-    public String getTelephone() {
-        return telephone;
-    }
-
-    public void setTelephone(String telephone) {
         this.telephone = telephone;
+        this.email = email;
+        this.cv = cv;
+    }
+
+    public Candidature(String nom, String telephone, String email, String cv) {
+        this.nom = nom;
+        this.telephone = telephone;
+        this.email = email;
+        this.cv = cv;
+    }
+
+    public String getCv() {
+        return cv;
+    }
+
+    public void setCv(String cv) {
+        this.cv = cv;
     }
 
     public String getEmail() {
@@ -41,33 +39,38 @@ public class Candidature {
         this.email = email;
     }
 
-    public int getOffreId() {
-        return offreId;
+    public String getTelephone() {
+        return telephone;
     }
 
-    public void setOffreId(int offreId) {
-        this.offreId = offreId;
-    }
-
-    public String getStatut() {
-        return statut;
-    }
-
-    public void setStatut(String statut) {
-        this.statut = statut;
-    }
-
-
-
-    public Candidature(int candidatId, String nom, String telephone, String email, int offreId, String statut) {
-        this.candidatId = candidatId;
-        this.nom = nom;
+    public void setTelephone(String telephone) {
         this.telephone = telephone;
-        this.email = email;
-        this.offreId = offreId;
-        this.statut = statut;
     }
 
+    public String getNom() {
+        return nom;
+    }
 
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
 
+    public int getCandidatId() {
+        return candidatId;
+    }
+
+    public void setCandidatId(int candidatId) {
+        this.candidatId = candidatId;
+    }
+
+    @Override
+    public String toString() {
+        return "Candidature{" +
+                "candidatId=" + candidatId +
+                ", nom='" + nom + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", email='" + email + '\'' +
+                ", cv='" + cv + '\'' +
+                '}';
+    }
 }
