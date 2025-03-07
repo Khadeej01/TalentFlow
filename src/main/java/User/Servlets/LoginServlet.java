@@ -33,9 +33,8 @@ public class LoginServlet extends HttpServlet {
 
         Candidat candidat = candidatDAO.loginCandidat(email, password);
         if (candidat != null) {
-            session.setAttribute("candidate", candidat);
+            session.setAttribute("user", candidat);
             resp.sendRedirect("CandidatList.jsp");
-            return; // Exit the method to prevent further execution
         } else {
             req.setAttribute("errorMessage", "Invalid email or password!");
             req.getRequestDispatcher("Login.jsp").forward(req, resp);
