@@ -2,6 +2,7 @@
 package Candidature.Servlets;
 import Candidature.DAO.CandidatureDAO;
 import Candidature.Models.Candidature;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -12,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 
-@WebServlet("/candidates")
+@WebServlet("/")
 public class CandidatureServlet extends HttpServlet {
     private CandidatureDAO candidatureDAO;
     @Override
@@ -28,12 +29,14 @@ public class CandidatureServlet extends HttpServlet {
 
         List<Candidature> candidatures = candidatureDAO.getAllCandidates();
         req.setAttribute("candidatures", candidatures);
-        req.getRequestDispatcher("/CandidatList").forward(req, resp);
+        RequestDispatcher dispatcher = req.getRequestDispatcher("CandidatList.jsp");
+        dispatcher.forward(req, resp);
 
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+        doGet(req, resp);
 
     }
 
