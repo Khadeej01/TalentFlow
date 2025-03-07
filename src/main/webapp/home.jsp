@@ -187,8 +187,8 @@
                 </li>
             </ul>
             <div>
-                <button class="btn btn-outline-primary me-2">Connexion</button>
-                <button class="btn btn-primary">Inscription</button>
+                <a href="Login.jsp" class="btn btn-outline-primary me-2">Connexion</a>
+                <a href="Home-Register.jsp" class="btn btn-primary">Inscription</a>
             </div>
         </div>
     </div>
