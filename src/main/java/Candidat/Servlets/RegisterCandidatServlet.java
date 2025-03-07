@@ -40,6 +40,7 @@ private CandidatDAO candidatDAO = new CandidatDAO();
         CandidatDAO candidatdao = new CandidatDAO();
 
         candidatDAO.registerCandidat(candidat);
+        resp.sendRedirect("Login.jsp");
     }
 
 

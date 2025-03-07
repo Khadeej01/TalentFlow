@@ -183,7 +183,7 @@
                     <a class="nav-link active" href="index.html">Accueil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="job-listings.html">Offres d'emploi</a>
+                    <a class="nav-link" href="offres-emploi.jsp">Offres d'emploi</a>
                 </li>
             </ul>
             <div>
