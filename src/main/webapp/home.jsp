@@ -183,7 +183,7 @@
                     <a class="nav-link active" href="index.html">Accueil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="job-listings.html">Offres d'emploi</a>
+                    <a class="nav-link" href="offres-emploi.jsp">Offres d'emploi</a>
                 </li>
             </ul>
             <div>
@@ -296,7 +296,7 @@
     </div>
 </footer>
 
-<!-- Bootstrap JS -->
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

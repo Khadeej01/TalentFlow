@@ -9,8 +9,9 @@ import jakarta.servlet.http.*;
         import java.io.IOException;
 import java.sql.*;
         import java.time.LocalDate;
+import java.util.List;
 
-@WebServlet("/offre-emploi")
+@WebServlet("/OffreEmploi")
 public class OffreEmploiServlet extends HttpServlet {
 
     private OffreEmploiDAO offreEmploiDAO;
@@ -18,7 +19,7 @@ public class OffreEmploiServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
 
-        String jdbcUrl = "jdbc:mysql://localhost:3306/TalentFlowDB";
+        String jdbcUrl = "jdbc:mysql://localhost:3306/TalentFlow2";
         String username = "root";
         String password = "Root@123";
         try {
@@ -61,67 +62,98 @@ public class OffreEmploiServlet extends HttpServlet {
 
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String idParam = request.getParameter("id");
-        if (idParam != null) {
-            try {
-                int id = Integer.parseInt(idParam);
-                OffreEmploi offreEmploi = offreEmploiDAO.getOffreEmploiById(id);
-                if (offreEmploi != null) {
-                    request.setAttribute("offreEmploi", offreEmploi);
-                    request.getRequestDispatcher("/offre-emploi-detail.jsp").forward(request, response);
-                } else {
-                    response.sendError(HttpServletResponse.SC_NOT_FOUND, "OffreEmploi not found.");
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error fetching OffreEmploi.");
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            String search = request.getParameter("search"); // Recherche par titre ou entreprise
+            String date = request.getParameter("date"); // Filtrage par date de publication
+
+            List<OffreEmploi> offres;
+            if (search != null && !search.isEmpty()) {
+                offres = offreEmploiDAO.searchOffres(search);
+            } else if (date != null && !date.isEmpty()) {
+                offres = offreEmploiDAO.filterOffresByDate(date);
+            } else {
+                offres = offreEmploiDAO.getAllOffresEmploi();
             }
-        } else {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "OffreEmploi ID is required.");
+
+            request.setAttribute("offres", offres);
+//            request.getRequestDispatcher("/offres.jsp").forward(request, response);
+           // List<OffreEmploi> offres = offreEmploiDAO.getAllOffresEmploi();
+            request.setAttribute("offres", offres);
+            request.getRequestDispatcher("offres.jsp").forward(request, response);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erreur lors de la récupération des offres.");
         }
+
     }
 
 
-    @Override
-    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String idParam = request.getParameter("id");
-        if (idParam != null) {
-            try {
-                int id = Integer.parseInt(idParam);
-                String titre = request.getParameter("titre");
-                String description = request.getParameter("description");
-                String datePublicationString = request.getParameter("datePublication");
-                String recruteurEmail = request.getParameter("recruteurEmail");
+//
+//    @Override
+//    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        String idParam = request.getParameter("id");
+//        if (idParam != null) {
+//            try {
+//                int id = Integer.parseInt(idParam);
+//                OffreEmploi offreEmploi = offreEmploiDAO.getOffreEmploiById(id);
+//                if (offreEmploi != null) {
+//                    request.setAttribute("offreEmploi", offreEmploi);
+//                    request.getRequestDispatcher("/offre-emploi-detail.jsp").forward(request, response);
+//                } else {
+//                    response.sendError(HttpServletResponse.SC_NOT_FOUND, "OffreEmploi not found.");
+//                }
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error fetching OffreEmploi.");
+//            }
+//        } else {
+//            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "OffreEmploi ID is required.");
+//        }
+//    }
 
-                LocalDate datePublication = LocalDate.parse(datePublicationString);
-                OffreEmploi offreEmploi = new OffreEmploi(id, titre, description, datePublication, recruteurEmail);
-                offreEmploiDAO.updateOffreEmploi(offreEmploi);
-                response.sendRedirect("offre-emploi?id=" + id);
-            } catch (SQLException e) {
-                e.printStackTrace();
-                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error updating OffreEmploi.");
-            }
-        } else {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "OffreEmploi ID is required.");
-        }
-    }
+
+//    @Override
+//    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        String idParam = request.getParameter("id");
+//        if (idParam != null) {
+//            try {
+//                int id = Integer.parseInt(idParam);
+//                String titre = request.getParameter("titre");
+//                String description = request.getParameter("description");
+//                String datePublicationString = request.getParameter("datePublication");
+//                String recruteurEmail = request.getParameter("recruteurEmail");
+//
+//                LocalDate datePublication = LocalDate.parse(datePublicationString);
+//                OffreEmploi offreEmploi = new OffreEmploi(id, titre, description, datePublication, recruteurEmail);
+//                offreEmploiDAO.updateOffreEmploi(offreEmploi);
+//                response.sendRedirect("offre-emploi?id=" + id);
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error updating OffreEmploi.");
+//            }
+//        } else {
+//            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "OffreEmploi ID is required.");
+//        }
+//    }
 
 
-    @Override
-    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String idParam = request.getParameter("id");
-        if (idParam != null) {
-            try {
-                int id = Integer.parseInt(idParam);
-                offreEmploiDAO.deleteOffreEmploi(id);
-                response.sendRedirect("offres-emploi");
-            } catch (SQLException e) {
-                e.printStackTrace();
-                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error deleting OffreEmploi.");
-            }
-        } else {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "OffreEmploi ID is required.");
-        }
-    }
+//    @Override
+//    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        String idParam = request.getParameter("id");
+//        if (idParam != null) {
+//            try {
+//                int id = Integer.parseInt(idParam);
+//                offreEmploiDAO.deleteOffreEmploi(id);
+//                response.sendRedirect("offres-emploi");
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error deleting OffreEmploi.");
+//            }
+//        } else {
+//            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "OffreEmploi ID is required.");
+//        }
+//    }
 }
