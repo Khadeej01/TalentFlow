@@ -40,4 +40,3 @@ build/
 .smarttomcat/
 conf/
 logs/
-test
