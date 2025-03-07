@@ -37,7 +37,14 @@ build/
 ### Mac OS ###
 .DS_Store
 
+<<<<<<< HEAD
+.smarttomcat
+
+logs/
+conf/
+=======
 .smarttomcat/
 conf/
 logs/
 work/
+>>>>>>> f64b9f10e9ed22d00d6bd19527056dbdc2f0b2f5

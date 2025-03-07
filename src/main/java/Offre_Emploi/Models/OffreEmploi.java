@@ -1,5 +1,6 @@
 package Offre_Emploi.Models;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 public class OffreEmploi {
@@ -21,6 +22,8 @@ public class OffreEmploi {
     public OffreEmploi(int id, String titre, String description, LocalDate datePublication, String recruteurEmail) {
     }
 
+    public OffreEmploi(int id, String titre, String description, String entreprise, String localisation, Date datePublication) {
+    }
 
 
     public int getId() { return id; }

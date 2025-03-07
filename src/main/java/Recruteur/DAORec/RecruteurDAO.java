@@ -18,6 +18,21 @@ public class RecruteurDAO {
     }}
 
 
+<<<<<<< HEAD
+    public void addRecruteur(Recruteur recruteur) throws SQLException {
+
+        String query = "INSERT INTO Users (nom, email, password, role) VALUES (?, ?, ?, ?)";
+
+        try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            statement.setString(1, recruteur.getNom());
+            statement.setString(2, recruteur.getEmail());
+            statement.setString(3, recruteur.getPassword());
+            statement.setString(4, recruteur.getRole());
+            statement.setString(5, recruteur.getEntreprise());
+            statement.setString(6, recruteur.getSecteur());
+
+            int rowsAffected =   statement.executeUpdate();
+=======
 //    public void addRecruteur(Recruteur recruteur) throws SQLException {
 //
 //        String query = "INSERT INTO Users (nom, email, password, role) VALUES (?, ?, ?, ?)";
@@ -41,6 +56,7 @@ public class RecruteurDAO {
 //            }
 //        }
 //    }
+>>>>>>> f64b9f10e9ed22d00d6bd19527056dbdc2f0b2f5
 
 
 //    public Recruteur getRecruteurById(int id) throws SQLException {
