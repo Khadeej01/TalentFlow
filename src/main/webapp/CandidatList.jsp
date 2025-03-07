@@ -135,7 +135,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Logout</a>
+                        <a href="LogoutServlet" class="nav-link" href="#">Logout</a>
                     </li>
                 </ul>
             </div>
