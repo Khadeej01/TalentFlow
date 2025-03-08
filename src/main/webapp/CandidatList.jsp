@@ -1,5 +1,13 @@
 <%@ page import="java.util.*" %>
 <%@ page import="Candidature.DAO.CandidatureDAO" %>
+<%@ page import="Candidat.DAO.CandidatDAO" %>
+
+
+<%
+    // Fetch all candidates from the database
+    CandidatDAO candidatDAO = new CandidatDAO();
+    List<Candidat> candidats = candidatDAO.getAllCandidats();
+%>
 
 <%@ page import="Candidat.Models.Candidat" %>
 <%@ page import="Candidature.Models.Candidature" %>
@@ -12,6 +20,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="TalentFlow Dashboard - Manage candidates and jobs efficiently.">
     <title>TalentFlow Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -123,7 +133,7 @@
 <body>
 <!-- Sidebar -->
 <div class="sidebar">
-    <a href="#" class="brand"><i class="fas fa-briefcase me-2"></i>TalentFlow</a>
+    <a href="index.jsp" class="brand"><i class="fas fa-briefcase me-2"></i>TalentFlow</a>
     <a href="${pageContext.request.contextPath}/candidates"><i class="fas fa-users"></i> <span>Candidates</span></a>
     <a href="#jobs"><i class="fas fa-briefcase"></i> <span>Jobs</span></a>
 
@@ -137,62 +147,62 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            <a href="LogoutServlet" class=" ml-6 bg-red-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-red-600 transition" id="logoutLink">Logout</a>
+
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a href="LogoutServlet" class="nav-link" href="#">Logout</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
+
     <div class="container mt-4">
         <h2 class="fw-bold text-primary mb-4">Candidates</h2>
         <div class="table-responsive">
 
-            <table class="table table-striped table-hover">
-                <thead class="table-dark">
+            <table class="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
+                <thead class="bg-blue-600 text-white">
                 <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Phone</th>
-                    <th scope="col">CV</th>
+                    <th class="py-3 px-6 text-center font-semibold border-b">ID</th>
+                    <th class="py-3 px-6 text-center font-semibold border-b">Name</th>
+                    <th class="py-3 px-6 text-center font-semibold border-b">Email</th>
+                    <th class="py-3 px-6 text-center font-semibold border-b">Phone</th>
+                    <th class="py-3 px-6 text-center font-semibold border-b">CV</th>
+                    <th class="py-3 px-6 text-center font-semibold border-b">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                <%
-                    CandidatureDAO candidatureDAO=new CandidatureDAO();
-                    List<Candidature> candidatList =  candidatureDAO.getAllCandidates();;
-                    for(Candidature candidat : candidatList){
-
-
-                %>
-                <tr>
-                    <td>
-                        <%=candidat.getCandidatId()%>
+                <% for (Candidat candidat : candidats) { %>
+                <tr class="hover:bg-blue-100">
+                    <td class="py-2 px-4 border-b text-center"><%= candidat.getId() %></td>
+                    <td class="py-2 px-4 border-b text-center"><%= candidat.getNom() %></td>
+                    <td class="py-2 px-4 border-b text-center"><%= candidat.getEmail() %></td>
+                    <td class="py-2 px-4 border-b text-center"><%= candidat.getTelephone() %></td>
+                    <td class="py-2 px-4 border-b text-center">
+                        <a href="<%= candidat.getCv() %>" class="text-blue-500 hover:underline transition">View CV</a>
                     </td>
-                    <td>
-                        <%=candidat.getNom()%>
-                    </td>
-                    <td>
-                        <%=candidat.getTelephone()%>
-                    </td>
-                    <td>
-                        <%=candidat.getEmail()%>
-                    </td>
+                    <td class="py-2 px-4 border-b text-center space-x-2">
+                        <!-- Edit Button -->
+                        <a href="editCandidat.jsp?id=<%= candidat.getId() %>" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition">
+                            Edit
+                        </a>
 
-
-                    <td>
-                        <%=candidat.getCv()%>
+                        <!-- Delete Button -->
+                        <form action="DeleteCandidatServlet" method="post" class="inline-block">
+                            <input type="hidden" name="id" value="<%= candidat.getId() %>">
+                            <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-red-600 transition">
+                                Delete
+                            </button>
+                        </form>
                     </td>
                 </tr>
-                <%   }
-                %>
+                <% } %>
                 </tbody>
-
             </table>
+
 
         </div>
     </div>

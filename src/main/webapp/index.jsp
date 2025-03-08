@@ -276,10 +276,10 @@
             <div class="col-lg-3 mb-4 mb-lg-0">
                 <h5 class="text-uppercase mb-3">Liens rapides</h5>
                 <ul class="list-unstyled">
-                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="index.jsp">Accueil</a></li>
                     <li><a href="job-listings.html">Offres d'emploi</a></li>
-                    <li><a href="login.html">Connexion</a></li>
-                    <li><a href="register.html">Inscription</a></li>
+                    <li><a href="Login.jsp">Connexion</a></li>
+                    <li><a href="Home-Register.jsp">Inscription</a></li>
                 </ul>
             </div>
             <div class="col-lg-3">

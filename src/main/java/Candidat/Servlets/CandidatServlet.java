@@ -39,8 +39,6 @@ public class CandidatServlet extends HttpServlet {
         CandidatDAO candidatDAO = new CandidatDAO();
 
 
-
-
     }
 
 
