@@ -1,27 +1,23 @@
 <%@ page import="java.util.*" %>
-<%@ page import="Candidature.DAO.CandidatureDAO" %>
-<%@ page import="Candidat.DAO.CandidatDAO" %>
-
-
-<%
-    // Fetch all candidates from the database
-    CandidatDAO candidatDAO = new CandidatDAO();
-    List<Candidat> candidats = candidatDAO.getAllCandidats();
-%>
-
-<%@ page import="Candidat.Models.Candidat" %>
-<%@ page import="Candidature.Models.Candidature" %>
+<%@ page import="Recruteur.DAORec.RecruteurDAO" %>
+<%@ page import="Recruteur.ModelRec.Recruteur" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%
+    // Fetch all recruiters from the database
+    RecruteurDAO recruteurDAO = new RecruteurDAO();
+    List<Recruteur> recruteurs = recruteurDAO.getAllRecruteurs(); // Assuming this method exists
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="TalentFlow Dashboard - Manage candidates and jobs efficiently.">
-    <title>TalentFlow Dashboard</title>
+    <meta name="description" content="TalentFlow Dashboard - Manage recruiters efficiently.">
+    <title>TalentFlow Dashboard - Recruiters</title>
     <script src="https://cdn.tailwindcss.com"></script>
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -136,9 +132,7 @@
     <a href="index.jsp" class="brand"><i class="fas fa-briefcase me-2"></i>TalentFlow</a>
     <a href="CandidatList.jsp"><i class="fas fa-users"></i> <span>Candidates</span></a>
     <a href="RecruiterList.jsp"><i class="fas fa-user-tie"></i> <span>Recruiters</span></a>
-
     <a href="offres-emploi.jsp"><i class="fas fa-briefcase"></i> <span>Jobs</span></a>
-
 </div>
 
 <!-- Content Area -->
@@ -149,8 +143,7 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a href="LogoutServlet" class=" ml-6 bg-red-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-red-600 transition" id="logoutLink">Logout</a>
-
+            <a href="LogoutServlet" class="ml-6 bg-red-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-red-600 transition" id="logoutLink">Logout</a>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
@@ -160,41 +153,34 @@
         </div>
     </nav>
 
-
     <div class="container mt-4">
-        <h2 class="fw-bold text-primary mb-4">Candidates</h2>
+        <h2 class="fw-bold text-primary mb-4">Recruiters</h2>
         <div class="table-responsive">
-
             <table class="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
                 <thead class="bg-blue-600 text-white">
                 <tr>
                     <th class="py-3 px-6 text-center font-semibold border-b">ID</th>
                     <th class="py-3 px-6 text-center font-semibold border-b">Name</th>
                     <th class="py-3 px-6 text-center font-semibold border-b">Email</th>
-                    <th class="py-3 px-6 text-center font-semibold border-b">Phone</th>
-                    <th class="py-3 px-6 text-center font-semibold border-b">CV</th>
+                    <th class="py-3 px-6 text-center font-semibold border-b">Entreprise</th>
                     <th class="py-3 px-6 text-center font-semibold border-b">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                <% for (Candidat candidat : candidats) { %>
+                <% for (Recruteur recruteur : recruteurs) { %>
                 <tr class="hover:bg-blue-100">
-                    <td class="py-2 px-4 border-b text-center"><%= candidat.getId() %></td>
-                    <td class="py-2 px-4 border-b text-center"><%= candidat.getNom() %></td>
-                    <td class="py-2 px-4 border-b text-center"><%= candidat.getEmail() %></td>
-                    <td class="py-2 px-4 border-b text-center"><%= candidat.getTelephone() %></td>
-                    <td class="py-2 px-4 border-b text-center">
-                        <a href="<%= candidat.getCv() %>" class="text-blue-500 hover:underline transition">View CV</a>
-                    </td>
+                    <td class="py-2 px-4 border-b text-center"><%= recruteur.getId() %></td>
+                    <td class="py-2 px-4 border-b text-center"><%= recruteur.getNom() %></td>
+                    <td class="py-2 px-4 border-b text-center"><%= recruteur.getEmail() %></td>
+                    <td class="py-2 px-4 border-b text-center"><%= recruteur.getEntreprise() != null ? recruteur.getEntreprise() : "N/A" %></td>
                     <td class="py-2 px-4 border-b text-center space-x-2">
                         <!-- Edit Button -->
-                        <a href="editCandidat.jsp?id=<%= candidat.getId() %>" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition">
+                        <a href="editRecruteur.jsp?id=<%= recruteur.getId() %>" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition">
                             Edit
                         </a>
-
                         <!-- Delete Button -->
-                        <form action="DeleteCandidatServlet" method="post" class="inline-block">
-                            <input type="hidden" name="id" value="<%= candidat.getId() %>">
+                        <form action="DeleteRecruteurServlet" method="post" class="inline-block">
+                            <input type="hidden" name="id" value="<%= recruteur.getId() %>">
                             <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-red-600 transition">
                                 Delete
                             </button>
@@ -204,8 +190,6 @@
                 <% } %>
                 </tbody>
             </table>
-
-
         </div>
     </div>
 </div>
