@@ -12,11 +12,24 @@ public class Recruteur extends User {
         this.secteur = secteur;
     }
 
+    public Recruteur( String nom, String email, String password, String entreprise) {
+        super( nom, email, password);
+        this.entreprise = entreprise;
+    }
 
-    public Recruteur(String nom, String email, String password,  String entreprise, String secteur) {
+    public Recruteur(String nom, String email, String password, String entreprise, String secteur) {
         super(nom, email, password);
         this.entreprise = entreprise;
         this.secteur = secteur;
+    }
+
+    public Recruteur(int id, String nom, String email, String password, String entreprise) {
+        super(id, nom, email, password);
+        this.entreprise = entreprise;
+    }
+
+    public Recruteur() {
+
     }
 
 
