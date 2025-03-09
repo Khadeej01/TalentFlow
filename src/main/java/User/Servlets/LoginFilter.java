@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebFilter({"/CandidatList.jsp"})
+@WebFilter({"/CandidatList.jsp","/RecruiterList.jsp"})
 public class LoginFilter implements Filter {
 
     public void init(FilterConfig fConfig) throws ServletException {}
