@@ -36,6 +36,9 @@ public class OffreEmploi {
     public OffreEmploi(int id, String titre, String description, String entreprise, Date datePublication) {
     }
 
+    public OffreEmploi(int id, String titre, String description) {
+    }
+
     // Getters et Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }

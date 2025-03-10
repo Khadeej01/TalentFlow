@@ -204,8 +204,8 @@
                         <h1 class="display-4 fw-bold mb-4">Simplifiez votre recrutement avec TalentFlow</h1>
                         <p class="lead mb-4">La plateforme qui connecte les meilleurs talents avec les entreprises qui recrutent.</p>
                         <div class="d-flex gap-3">
-                            <a href="register.html?type=candidate" class="btn btn-light btn-lg">Je cherche un emploi</a>
-                            <a href="register.html?type=recruiter" class="btn btn-outline-light btn-lg">Je recrute</a>
+                            <a href="register-Candidat.jsp" class="btn btn-light btn-lg">Je cherche un emploi</a>
+                            <a href="register-recruteur.jsp" class="btn btn-outline-light btn-lg">Je recrute</a>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -255,8 +255,8 @@
                         <h2 class="mb-4 fw-bold">Prêt à transformer votre processus de recrutement ?</h2>
                         <p class="lead mb-4">Rejoignez TalentFlow dès aujourd'hui et trouvez les talents qui feront la différence.</p>
                         <div class="d-flex justify-content-center gap-3">
-                            <a href="register.html?type=recruiter" class="btn btn-light">Espace recruteur</a>
-                            <a href="register.html?type=candidate" class="btn btn-outline-light">Espace candidat</a>
+                            <a href="register-recruteur.jsp" class="btn btn-light">Espace recruteur</a>
+                            <a href="register-Candidat.jsp" class="btn btn-outline-light">Espace candidat</a>
                         </div>
                     </div>
                 </div>
@@ -276,17 +276,17 @@
             <div class="col-lg-3 mb-4 mb-lg-0">
                 <h5 class="text-uppercase mb-3">Liens rapides</h5>
                 <ul class="list-unstyled">
-                    <li><a href="index.html">Accueil</a></li>
-                    <li><a href="job-listings.html">Offres d'emploi</a></li>
-                    <li><a href="login.html">Connexion</a></li>
-                    <li><a href="register.html">Inscription</a></li>
+                    <li><a href="index.jsp">Accueil</a></li>
+                    <li><a href="offres-emploi.jsp">Offres d'emploi</a></li>
+                    <li><a href="Login.jsp">Connexion</a></li>
+                    <li><a href="register-Candidat.jsp">Inscription</a></li>
                 </ul>
             </div>
             <div class="col-lg-3">
                 <h5 class="text-uppercase mb-3">Contact</h5>
                 <ul class="list-unstyled">
                     <li><i class="fas fa-envelope me-2"></i>contact@talentflow.fr</li>
-                    <li><i class="fas fa-phone me-2"></i>+33 1 23 45 67 89</li>
+                    <li><i class="fas fa-phone me-2"></i>06000000000</li>
                 </ul>
             </div>
         </div>
