@@ -8,7 +8,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="flex justify-center items-center h-screen bg-gray-100">
-<form action="RegisterRecruteurServlet" method="post" class="bg-white p-8 rounded-lg shadow-md w-96">
+<form action="RegisterRecruteur" method="post" class="bg-white p-8 rounded-lg shadow-md w-96">
   <h2 class="text-xl font-semibold text-center mb-6">Recruteur Registration</h2>
   <input type="text" name="nom" placeholder="Name" required class="w-full p-2 border rounded mb-4">
   <input type="email" name="email" placeholder="Email" required class="w-full p-2 border rounded mb-4">

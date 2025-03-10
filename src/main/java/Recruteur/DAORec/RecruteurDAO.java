@@ -4,18 +4,125 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
+import Candidat.Models.Candidat;
 import Recruteur.ModelRec.Recruteur;
-import java.sql.*;
+import utils.DBConnection;
 
 public class RecruteurDAO {
-    private Connection connection;
 
 
-    public RecruteurDAO(Connection connection) {
-        this.connection = connection;
-    }}
+
+    public void registerRecruteur(Recruteur recruteur) {
+
+        try (Connection con = DBConnection.getConnection()) {
+            String query = "INSERT INTO recruteurs (nom, email, password,  entreprise) VALUES (?, ?, ?, ?)";
+            PreparedStatement stmnt = con.prepareStatement(query);
+            stmnt.setString(1, recruteur.getNom());
+            stmnt.setString(2, recruteur.getEmail());
+            stmnt.setString(3, recruteur.getPassword());
+            stmnt.setString(4, recruteur.getEntreprise());
+            stmnt.executeUpdate() ;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+    }
+
+    public Recruteur loginRecruteur(String email, String password) {
+
+        Recruteur recruteur = null;
+        try(Connection conn = DBConnection.getConnection()) {
+            String query = "SELECT * FROM recruteurs WHERE email = ? AND password = ?";
+            PreparedStatement stmnt = conn.prepareStatement(query);
+            stmnt.setString(1, email);
+            stmnt.setString(2, password);
+            ResultSet rs = stmnt.executeQuery();
+
+            if (rs.next()) {
+                recruteur = new Recruteur();
+                recruteur.setId(rs.getInt("id"));
+                recruteur.setNom(rs.getString("nom"));
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return recruteur;
+    }
+
+    public List<Recruteur> getAllRecruteurs() {
+        List<Recruteur> recruteurs = new ArrayList<>();
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM recruteurs");
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                Recruteur recruteur = new Recruteur();
+                recruteur.setId(rs.getInt("id"));
+                recruteur.setNom(rs.getString("nom"));
+                recruteur.setEmail(rs.getString("email"));
+                recruteur.setEntreprise(rs.getString("entreprise"));
+                recruteurs.add(recruteur);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return recruteurs;
+    }
+
+    public Recruteur getRecruteurById(int id) {
+        Recruteur recruteur = null;
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM recruteurs WHERE id = ?")) {
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    recruteur = new Recruteur();
+                    recruteur.setId(rs.getInt("id"));
+                    recruteur.setNom(rs.getString("nom"));
+                    recruteur.setEmail(rs.getString("email"));
+                    recruteur.setEntreprise(rs.getString("entreprise"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return recruteur;
+    }
+
+    public boolean updateRecruteur(Recruteur recruteur) {
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement("UPDATE recruteurs SET nom=?, email=?, entreprise=? WHERE id=?")) {
+            stmt.setString(1, recruteur.getNom());
+            stmt.setString(2, recruteur.getEmail());
+            stmt.setString(3, recruteur.getEntreprise());
+            stmt.setInt(4, recruteur.getId());
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean deleteRecruteur(int id) {
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement("DELETE FROM recruteurs WHERE id=?")) {
+            stmt.setInt(1, id);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+}
+
+
 
 
 

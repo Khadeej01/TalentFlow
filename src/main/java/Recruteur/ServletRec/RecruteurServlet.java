@@ -20,6 +20,7 @@ public class RecruteurServlet extends HttpServlet {
 
     private RecruteurDAO recruteurDAO;
 
+
 //    @Override
 //    public void init() throws ServletException {
 //        // Initialiser le DAO avec une connexion à la base de données

@@ -1,10 +1,9 @@
-
-package Candidat.Servlets;
+package Recruteur.ServletRec;
 
 import Candidat.DAO.CandidatDAO;
 import Candidat.Models.Candidat;
-import User.DAO.userDAO;
-import User.Models.User;
+import Recruteur.DAORec.RecruteurDAO;
+import Recruteur.ModelRec.Recruteur;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -13,14 +12,14 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/RegisterCandidat")
-public class RegisterCandidatServlet extends HttpServlet {
+@WebServlet("/RegisterRecruteur")
+public class RegisterRecruteur extends HttpServlet {
 
-    private CandidatDAO candidatDAO = new CandidatDAO();
+    private RecruteurDAO recruteurDAO = new RecruteurDAO();
     @Override
     public void init() throws ServletException {
         super.init();
-        candidatDAO = new CandidatDAO();
+        recruteurDAO = new RecruteurDAO();
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -34,15 +33,16 @@ public class RegisterCandidatServlet extends HttpServlet {
         String nom = req.getParameter("nom");
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        String telephone = req.getParameter("telephone");
-        String cv = req.getParameter("cv");
+        String entreprise = req.getParameter("entreprise");
 
-        Candidat candidat = new Candidat(nom,email,password,telephone,cv);
-        CandidatDAO candidatdao = new CandidatDAO();
 
-        candidatDAO.registerCandidat(candidat);
+        Recruteur recruteur = new Recruteur(nom,email,password,entreprise);
+        RecruteurDAO recruteurDAO = new RecruteurDAO();
+
+        recruteurDAO.registerRecruteur(recruteur);
         resp.sendRedirect("Login.jsp");
     }
 
 
 }
+

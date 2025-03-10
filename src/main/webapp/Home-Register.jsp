@@ -12,7 +12,7 @@
   <h2 class="text-xl font-semibold text-center mb-6">Choose Your Role</h2>
   <div class="space-y-4">
     <a href="register-Candidat.jsp" class="block text-center bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">I am a Candidat</a>
-    <a href="register-Recruteur.jsp" class="block text-center bg-green-500 text-white py-2 rounded-lg hover:bg-green-600">I am a Recruteur</a>
+    <a href="register-recruteur.jsp" class="block text-center bg-green-500 text-white py-2 rounded-lg hover:bg-green-600">I am a Recruteur</a>
   </div>
 </div>
 </body>

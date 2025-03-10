@@ -277,9 +277,7 @@
                 <h5 class="text-uppercase mb-3">Liens rapides</h5>
                 <ul class="list-unstyled">
                     <li><a href="index.jsp">Accueil</a></li>
-                    <li><a href="offres-emploi.jsp">Offres d'emploi</a></li>
-                    <li><a href="Login.jsp">Connexion</a></li>
-                    <li><a href="register-Candidat.jsp">Inscription</a></li>
+
                 </ul>
             </div>
             <div class="col-lg-3">
