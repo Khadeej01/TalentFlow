@@ -105,37 +105,66 @@ public class OffreEmploiDAO {
         return new OffreEmploi(id, titre, description, datePublication, recruteurEmail);
     }
 
-
-    public List<OffreEmploi> getAllOffres() throws SQLException {
+    public List<OffreEmploi> getAllOffers() {
         List<OffreEmploi> offres = new ArrayList<>();
 
-        // Remplace ces valeurs par les informations de connexion réelles
-        String url = "jdbc:mysql://localhost:3306/TalentFlow2";  // L'URL de ta base de données
-        String user = "root";  // Utilisateur de ta base de données
-        String password = "Root@123";  // Mot de passe de ta base de données
+        try {
+            Connection conn = DBConnection.getConnection();
+            if (conn == null) {
+                System.out.println("Erreur : Connexion à la base de données échouée !");
+                return offres;
+            }
 
-        String query = "SELECT * FROM OffreEmploi";
-
-        // Utilise ces chaînes de caractères pour établir la connexion
-        try (Connection conn = DriverManager.getConnection(url, user, password);
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
+            String sql = "SELECT * FROM OffreEmploi";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                int id = rs.getInt("id");
-                String titre = rs.getString("titre");
-                String description = rs.getString("description");
-                String entreprise = rs.getString("entreprise");
-
-                Date datePublication = rs.getDate("date_publication");
-
-                OffreEmploi offre = new OffreEmploi(id, titre, description, entreprise, datePublication);
+                OffreEmploi offre = new OffreEmploi();
+                offre.setTitre(rs.getString("titre"));
+                offre.setDescription(rs.getString("description"));
+                offre.setDatePublication(rs.getDate("date_publication").toLocalDate());
+                offre.setRecruteurEmail(rs.getString("recruteur_email"));
+                offre.setEntreprise(rs.getString("entreprise"));
                 offres.add(offre);
             }
+
+            System.out.println("Nombre d'offres récupérées : " + offres.size());
+
+            rs.close();
+            stmt.close();
+            conn.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return offres;
     }
+
+    public OffreEmploi getOffreById(int id) {
+        OffreEmploi offre = null;
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM OffreEmploi WHERE id = ?")) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                offre = new OffreEmploi(
+                        rs.getInt("id"),
+                        rs.getString("titre"),
+                        rs.getString("description")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (offre == null) {
+            System.out.println(" Aucune offre trouvée avec l'id " + id);
+        }
+        return offre;
+    }
+
 
     public List<OffreEmploi> searchOffres(String keyword) throws SQLException {
         List<OffreEmploi> offres = new ArrayList<>();
@@ -157,7 +186,27 @@ public class OffreEmploiDAO {
         }
         return offres;
     }
+    public void supprimerOffre(int id) {
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement("DELETE FROM OffreEmploi WHERE id = ?")) {
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public void modifierOffre(int id, String titre, String description) {
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement("UPDATE OffreEmploi SET titre = ?, description = ? WHERE id = ?")) {
+            stmt.setString(1, titre);
+            stmt.setString(2, description);
+            stmt.setInt(3, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     public List<OffreEmploi> filterOffresByDate(String date) throws SQLException {
         List<OffreEmploi> offres = new ArrayList<>();
         String sql = "SELECT * FROM OffreEmploi WHERE date_publication = ?";
@@ -179,39 +228,5 @@ public class OffreEmploiDAO {
     }
 
 
-    public List<OffreEmploi> getAllOffers() {
-        List<OffreEmploi> offreEmploiList = new ArrayList<>();
-
-        // SQL query to select all offers
-        String query = "SELECT titre, description, date_publication, recruteur_email, entreprise FROM offre_emploi";
-
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
-
-            // Loop through the result set
-            while (rs.next()) {
-                String titre = rs.getString("titre");
-                String description = rs.getString("description");
-                Date datePublication = rs.getDate("date_publication");
-                String recruteurEmail = rs.getString("recruteur_email");
-                String entreprise = rs.getString("entreprise");
-
-                // Create a new OffreEmploi object and add it to the list
-                OffreEmploi offreEmploi = new OffreEmploi(
-                        titre,
-                        description,
-                        datePublication.toLocalDate(),
-                        recruteurEmail,
-                        entreprise
-                );
-                offreEmploiList.add(offreEmploi);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();  // Handle exception appropriately
-        }
-
-        return offreEmploiList;
-    }
 }
 

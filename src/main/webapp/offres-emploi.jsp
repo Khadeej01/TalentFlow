@@ -34,6 +34,11 @@
                     <label for="recruteurEmail" class="form-label">Email du recruteur :</label>
                     <input type="email" class="form-control" id="recruteurEmail" name="recruteurEmail" required>
                 </div>
+
+                <div class="col-md-6">
+                    <label for="entreprise" class="form-label">Entreprise :</label>
+                    <input type="text" class="form-control" id="entreprise" name="entreprise" required>
+                </div>
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary w-100">Créer l'offre</button>
                 </div>

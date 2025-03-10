@@ -1,6 +1,8 @@
 <%@ page import="java.util.*" %>
 <%@ page import="Offre_Emploi.DAO.OffreEmploiDAO" %>
 <%@ page import="Offre_Emploi.Models.OffreEmploi" %>
+<%@ page import="Offre_Emploi.Servlets.ListeOffresServlet" %>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -164,13 +166,28 @@
                     <th scope="col">Publication Date</th>
                     <th scope="col">Recruteur Email</th>
                     <th scope="col">Entreprise</th>
+                    <th scope="col">Modifier</th>
+                    <th scope="col">Supprimer</th>
                 </tr>
                 </thead>
                 <tbody>
+
                 <%
                     OffreEmploiDAO offreEmploiDAO = new OffreEmploiDAO();
                     List<OffreEmploi> offreEmploiList = offreEmploiDAO.getAllOffers();
+
+                    System.out.println("Nombre d'offres récupérées : " + offreEmploiList.size()); // Debug
+
+                    if (offreEmploiList.isEmpty()) {
+                %>
+                <tr>
+                    <td colspan="5" class="text-center text-danger">Aucune offre disponible.</td>
+                </tr>
+                <%
+                } else {
                     for(OffreEmploi offre : offreEmploiList) {
+                        System.out.println("Offre récupérée : " + offre.getTitre()); // Debug
+
                 %>
                 <tr>
                     <td><%= offre.getTitre() %></td>
@@ -178,12 +195,32 @@
                     <td><%= offre.getDatePublication() %></td>
                     <td><%= offre.getRecruteurEmail() %></td>
                     <td><%= offre.getEntreprise() %></td>
+
+                    <td>
+                        <a href="ModifierOffreServlet?id=<%= offre.getId() %>" class="btn btn-primary btn-sm col-12">
+                            <i ></i> Modifier
+                        </a>
+
+
+                    </td>
+                    <td>
+                        <form action="SupprimerOffreServlet" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette offre ?');">
+                            <input type="hidden" name="id" value="<%= offre.getId() %>">
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                <i class=""></i> Supprimer
+                            </button>
+                        </form>
+                    </td>
                 </tr>
-                <% } %>
+                <%
+                        }
+                    }
+                %>
                 </tbody>
             </table>
         </div>
     </div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
